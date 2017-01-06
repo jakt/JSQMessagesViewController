@@ -172,6 +172,9 @@
  */
 @property (assign, nonatomic) CGFloat topContentAdditionalInset;
 
+// NEW CODE ADDED HERE
+@property (assign, nonatomic) CGFloat toolbarContainerHeight;
+
 #pragma mark - Class methods
 
 /**

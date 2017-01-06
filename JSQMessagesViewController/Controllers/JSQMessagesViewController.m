@@ -173,7 +173,7 @@ JSQMessagesKeyboardControllerDelegate>
 
     self.jsq_isObserving = NO;
 
-    self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight;
+    self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight + self.toolbarContainerHeight;
 
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
@@ -230,6 +230,23 @@ JSQMessagesKeyboardControllerDelegate>
 
 #pragma mark - Setters
 
+-(void) setToolbarContainerHeight:(CGFloat) toolbarContainerHeight {
+    if (_toolbarContainerHeight != toolbarContainerHeight) {
+        CGFloat distanceFromBottom = self.collectionView.contentSize.height - (self.collectionView.contentOffset.y + self.collectionView.frame.size.height - self.collectionView.contentInset.bottom);
+        
+        CGFloat difference = toolbarContainerHeight - _toolbarContainerHeight;
+        self.toolbarHeightConstraint.constant = self.toolbarHeightConstraint.constant + difference;
+        _toolbarContainerHeight = toolbarContainerHeight;
+        CGFloat top = self.topLayoutGuide.length + self.topContentAdditionalInset;
+        CGFloat bottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(self.inputToolbar.frame) + difference;
+        [self jsq_setCollectionViewInsetsTopValue:top bottomValue:bottom];
+        if (distanceFromBottom == 0 && difference > 0) {
+            CGFloat current = self.collectionView.contentOffset.y;
+            self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, current + (difference - distanceFromBottom));
+        }
+    }
+}
+
 - (void)setShowTypingIndicator:(BOOL)showTypingIndicator
 {
     if (_showTypingIndicator == showTypingIndicator) {
@@ -277,7 +294,7 @@ JSQMessagesKeyboardControllerDelegate>
     NSParameterAssert(self.senderDisplayName != nil);
 
     [super viewWillAppear:animated];
-    self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight;
+    self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight + self.toolbarContainerHeight;
     [self.view layoutIfNeeded];
     [self.collectionView.collectionViewLayout invalidateLayout];
 
@@ -1016,14 +1033,16 @@ JSQMessagesKeyboardControllerDelegate>
 
 - (void)jsq_adjustInputToolbarHeightConstraintByDelta:(CGFloat)dy
 {
-    CGFloat proposedHeight = self.toolbarHeightConstraint.constant + dy;
-
+    CGFloat proposedHeight = (self.toolbarHeightConstraint.constant - self.toolbarContainerHeight) + dy;
+    
     CGFloat finalHeight = MAX(proposedHeight, self.inputToolbar.preferredDefaultHeight);
-
+    
     if (self.inputToolbar.maximumHeight != NSNotFound) {
-        finalHeight = MIN(finalHeight, self.inputToolbar.maximumHeight);
+        finalHeight = MIN(finalHeight, self.inputToolbar.maximumHeight - self.toolbarContainerHeight);
     }
-
+    
+    finalHeight = finalHeight + self.toolbarContainerHeight;
+    
     if (self.toolbarHeightConstraint.constant != finalHeight) {
         self.toolbarHeightConstraint.constant = finalHeight;
         [self.view setNeedsUpdateConstraints];
@@ -1055,7 +1074,7 @@ JSQMessagesKeyboardControllerDelegate>
 - (void)jsq_updateCollectionViewInsets
 {
     [self jsq_setCollectionViewInsetsTopValue:self.topLayoutGuide.length + self.topContentAdditionalInset
-                                  bottomValue:CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(self.inputToolbar.frame)];
+                                  bottomValue:CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(self.inputToolbar.frame) + self.toolbarContainerHeight];
 }
 
 - (void)jsq_setCollectionViewInsetsTopValue:(CGFloat)top bottomValue:(CGFloat)bottom
