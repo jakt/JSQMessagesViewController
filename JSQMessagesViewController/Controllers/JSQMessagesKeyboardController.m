@@ -263,6 +263,7 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
     [self jsq_setKeyboardViewHidden:YES];
     [self jsq_removeKeyboardFrameObserver];
     [self.textView resignFirstResponder];
+    [self.firstResponderView endEditing:YES];
 }
 
 #pragma mark - Key-value observing
@@ -307,33 +308,38 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
 
 - (void)jsq_handlePanGestureRecognizer:(UIPanGestureRecognizer *)pan
 {
+    // find lowest point of active cell view
+    CGRect frameInView = [self.firstResponderView convertRect:self.firstResponderView.frame toView:self.contextView.window];
+    CGFloat y = frameInView.origin.y + frameInView.size.height;
+    
     CGPoint touch = [pan locationInView:self.contextView.window];
-
+    CGFloat relevantY = MAX(touch.y, y);
+    
     //  system keyboard is added to a new UIWindow, need to operate in window coordinates
     //  also, keyboard always slides from bottom of screen, not the bottom of a view
     CGFloat contextViewWindowHeight = CGRectGetHeight(self.contextView.window.frame);
-
+    
     if ([UIDevice jsq_isCurrentDeviceBeforeiOS8]) {
         //  handle iOS 7 bug when rotating to landscape
         if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
             contextViewWindowHeight = CGRectGetWidth(self.contextView.window.frame);
         }
     }
-
+    
     CGFloat keyboardViewHeight = CGRectGetHeight(self.keyboardView.frame);
-
+    
     CGFloat dragThresholdY = (contextViewWindowHeight - keyboardViewHeight - self.keyboardTriggerPoint.y);
-
+    
     CGRect newKeyboardViewFrame = self.keyboardView.frame;
-
-    BOOL userIsDraggingNearThresholdForDismissing = (touch.y > dragThresholdY);
-
+    
+    BOOL userIsDraggingNearThresholdForDismissing = (relevantY > dragThresholdY);
+    
     self.keyboardView.userInteractionEnabled = !userIsDraggingNearThresholdForDismissing;
-
+    
     switch (pan.state) {
         case UIGestureRecognizerStateChanged:
         {
-            newKeyboardViewFrame.origin.y = touch.y + self.keyboardTriggerPoint.y;
+            newKeyboardViewFrame.origin.y = relevantY + self.keyboardTriggerPoint.y;
 
             //  bound frame between bottom of view and height of keyboard
             newKeyboardViewFrame.origin.y = MIN(newKeyboardViewFrame.origin.y, contextViewWindowHeight);

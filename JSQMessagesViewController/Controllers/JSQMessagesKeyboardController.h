@@ -72,6 +72,9 @@ FOUNDATION_EXPORT NSString * const JSQMessagesKeyboardControllerUserInfoKeyKeybo
  */
 @interface JSQMessagesKeyboardController : NSObject
 
+// Custom form view that is currently being edited in some way.
+@property (weak, nonatomic) UIView *firstResponderView;
+
 /**
  *  The object that acts as the delegate of the keyboard controller.
  */
