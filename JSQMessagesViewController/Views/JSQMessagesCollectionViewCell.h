@@ -87,6 +87,8 @@
  */
 @interface JSQMessagesCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic) BOOL outgoing;
+
 /**
  *  The object that acts as the delegate for the cell.
  */
