@@ -371,8 +371,8 @@ typedef void (^JSQAnimationCompletionBlock)(BOOL finished);
 
             CGPoint velocity = [pan velocityInView:self.contextView];
             BOOL userIsScrollingDown = (velocity.y > 0.0f);
-            BOOL shouldHide = (userIsScrollingDown && userIsDraggingNearThresholdForDismissing);
-
+            BOOL customCellBelowKeyboard = y > (contextViewWindowHeight - keyboardViewHeight - self.keyboardTriggerPoint.y);
+            BOOL shouldHide = (userIsScrollingDown && userIsDraggingNearThresholdForDismissing) || customCellBelowKeyboard;
             newKeyboardViewFrame.origin.y = shouldHide ? contextViewWindowHeight : (contextViewWindowHeight - keyboardViewHeight);
 
             [UIView animateWithDuration:0.25
