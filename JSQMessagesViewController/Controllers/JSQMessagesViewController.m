@@ -231,19 +231,17 @@ JSQMessagesKeyboardControllerDelegate>
 #pragma mark - Setters
 
 -(void) setToolbarContainerHeight:(CGFloat) toolbarContainerHeight {
-    if (_toolbarContainerHeight != toolbarContainerHeight) {
-        CGFloat distanceFromBottom = self.collectionView.contentSize.height - (self.collectionView.contentOffset.y + self.collectionView.frame.size.height - self.collectionView.contentInset.bottom);
-        
-        CGFloat difference = toolbarContainerHeight - _toolbarContainerHeight;
-        self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight + toolbarContainerHeight;
-        _toolbarContainerHeight = toolbarContainerHeight;
-        CGFloat top = self.topLayoutGuide.length + self.topContentAdditionalInset;
-        CGFloat bottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(self.inputToolbar.frame) + difference;
-        [self jsq_setCollectionViewInsetsTopValue:top bottomValue:bottom];
-        if (distanceFromBottom == 0 && difference > 0) {
-            CGFloat current = self.collectionView.contentOffset.y;
-            self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, current + (difference - distanceFromBottom));
-        }
+    CGFloat distanceFromBottom = self.collectionView.contentSize.height - (self.collectionView.contentOffset.y + self.collectionView.frame.size.height - self.collectionView.contentInset.bottom);
+    
+    CGFloat difference = toolbarContainerHeight - _toolbarContainerHeight;
+    self.toolbarHeightConstraint.constant = self.inputToolbar.preferredDefaultHeight + toolbarContainerHeight;
+    _toolbarContainerHeight = toolbarContainerHeight;
+    CGFloat top = self.topLayoutGuide.length + self.topContentAdditionalInset;
+    CGFloat bottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(self.inputToolbar.frame) + difference;
+    [self jsq_setCollectionViewInsetsTopValue:top bottomValue:bottom];
+    if (distanceFromBottom == 0 && difference > 0) {
+        CGFloat current = self.collectionView.contentOffset.y;
+        self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, current + (difference - distanceFromBottom));
     }
 }
 
