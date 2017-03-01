@@ -53,6 +53,10 @@
     //  attempt to prevent selecting text
     return NSMakeRange(NSNotFound, NSNotFound);
 }
+    
+- (BOOL)canBecomeFirstResponder {
+    return NO;
+}
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
