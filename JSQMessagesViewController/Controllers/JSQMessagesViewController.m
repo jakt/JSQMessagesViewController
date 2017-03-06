@@ -238,11 +238,16 @@ JSQMessagesKeyboardControllerDelegate>
     _toolbarContainerHeight = toolbarContainerHeight;
     CGFloat top = self.topLayoutGuide.length + self.topContentAdditionalInset;
     CGFloat bottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(self.inputToolbar.frame) + difference;
-    [self jsq_setCollectionViewInsetsTopValue:top bottomValue:bottom];
-    if (distanceFromBottom == 0 && difference > 0) {
-        CGFloat current = self.collectionView.contentOffset.y;
-        self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, current + (difference - distanceFromBottom));
-    }
+    [UIView animateWithDuration:0.3 animations:^{
+        [self jsq_setCollectionViewInsetsTopValue:top bottomValue:bottom];
+        if (distanceFromBottom == 0 && difference > 0) {
+            CGFloat current = self.collectionView.contentOffset.y;
+            self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, current + (difference - distanceFromBottom));
+        }
+        [self.collectionView layoutIfNeeded];
+        [self.inputToolbar layoutIfNeeded];
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (void)setShowTypingIndicator:(BOOL)showTypingIndicator
