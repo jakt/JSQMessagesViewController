@@ -174,6 +174,7 @@
 
 // NEW CODE ADDED HERE
 @property (assign, nonatomic) CGFloat toolbarContainerHeight;
+@property (assign, nonatomic) CGFloat textBarHeight;
 
 #pragma mark - Class methods
 
