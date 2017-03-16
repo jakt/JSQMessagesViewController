@@ -175,6 +175,7 @@
 // NEW CODE ADDED HERE
 @property (assign, nonatomic) CGFloat toolbarContainerHeight;
 @property (assign, nonatomic) CGFloat textBarHeight;
+- (void)customKeyboardViewDidChangeFrame:(CGRect)newFrame;
 
 #pragma mark - Class methods
 

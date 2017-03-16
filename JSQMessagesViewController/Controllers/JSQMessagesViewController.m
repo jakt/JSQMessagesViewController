@@ -937,6 +937,14 @@ JSQMessagesKeyboardControllerDelegate>
     [self jsq_setToolbarBottomLayoutGuideConstant:heightFromBottom];
 }
 
+- (void)customKeyboardViewDidChangeFrame:(CGRect)newFrame {
+    CGFloat heightFromBottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(newFrame);
+    
+    heightFromBottom = MAX(0.0, heightFromBottom);
+    
+    [self jsq_setToolbarBottomLayoutGuideConstant:heightFromBottom];
+}
+
 - (void)jsq_setToolbarBottomLayoutGuideConstant:(CGFloat)constant
 {
     self.toolbarBottomLayoutGuide.constant = constant;
