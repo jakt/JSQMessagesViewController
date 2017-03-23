@@ -54,4 +54,8 @@
  */
 - (void)prepareForResettingLayout:(JSQMessagesCollectionViewFlowLayout *)layout;
 
+
+// ADDED in order to dynamically update message heights. Call before refreshing messagebubblesize
+- (void)resetSizeForMessageData:(id<JSQMessageData>)messageData;
+
 @end
