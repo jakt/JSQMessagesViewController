@@ -241,7 +241,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    UIRectCorner *corners;
+    UIRectCorner corners;
     if (self.outgoing) {
         corners = (UIRectCornerTopLeft|UIRectCornerTopRight|UIRectCornerBottomLeft);
     } else {
