@@ -120,7 +120,7 @@
 
         CGFloat horizontalInsetsTotal = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble;
         CGFloat maximumTextWidth = [self textBubbleWidthForLayout:layout] - avatarSize.width - horizontalInsetsTotal;
-        if (self.ownId) {
+        if ([self.ownId isEqualToString:messageData.senderId]) {
             // If own message, remove the messageBubbleLeftRightMargin to make room for the "edit" button. Otherwise, show message across the full screen width. Media messages handle adjusting size in own custom sizing.
             maximumTextWidth = [self textBubbleWidthForLayout:layout] - avatarSize.width - layout.messageBubbleLeftRightMargin - horizontalInsetsTotal;
         }
