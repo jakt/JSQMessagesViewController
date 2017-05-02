@@ -114,11 +114,11 @@
         CGSize avatarSize = [self jsq_avatarSizeForMessageData:messageData withLayout:layout];
 
         //  from the cell xibs, there is a 2 point space between avatar and bubble
-        CGFloat spacingBetweenAvatarAndBubble = 0.0f;
+        CGFloat spacingBetweenEdgeAndBubble = 4.0f;
         CGFloat horizontalContainerInsets = layout.messageBubbleTextViewTextContainerInsets.left + layout.messageBubbleTextViewTextContainerInsets.right;
         CGFloat horizontalFrameInsets = layout.messageBubbleTextViewFrameInsets.left + layout.messageBubbleTextViewFrameInsets.right;
 
-        CGFloat horizontalInsetsTotal = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble;
+        CGFloat horizontalInsetsTotal = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenEdgeAndBubble * 2.0f;
         CGFloat maximumTextWidth = [self textBubbleWidthForLayout:layout] - avatarSize.width - horizontalInsetsTotal;
         if ([self.ownId isEqualToString:messageData.senderId]) {
             // If own message, remove the messageBubbleLeftRightMargin to make room for the "edit" button. Otherwise, show message across the full screen width. Media messages handle adjusting size in own custom sizing.
