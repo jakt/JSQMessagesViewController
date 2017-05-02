@@ -40,4 +40,7 @@
            minimumBubbleWidth:(NSUInteger)minimumBubbleWidth
         usesFixedWidthBubbles:(BOOL)usesFixedWidthBubbles NS_DESIGNATED_INITIALIZER;
 
+// Custom variable added for Clark 1.3
+@property (nonatomic) NSString *ownId;
+
 @end
