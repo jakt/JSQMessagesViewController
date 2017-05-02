@@ -114,7 +114,7 @@
         CGSize avatarSize = [self jsq_avatarSizeForMessageData:messageData withLayout:layout];
 
         //  from the cell xibs, there is a 2 point space between avatar and bubble
-        CGFloat spacingBetweenAvatarAndBubble = 2.0f;
+        CGFloat spacingBetweenAvatarAndBubble = 0.0f;
         CGFloat horizontalContainerInsets = layout.messageBubbleTextViewTextContainerInsets.left + layout.messageBubbleTextViewTextContainerInsets.right;
         CGFloat horizontalFrameInsets = layout.messageBubbleTextViewFrameInsets.left + layout.messageBubbleTextViewFrameInsets.right;
 
