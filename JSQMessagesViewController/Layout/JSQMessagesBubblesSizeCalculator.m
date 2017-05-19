@@ -127,7 +127,7 @@
 
         CGRect stringRect = [[messageData text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
                                                              options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                          attributes:@{ NSFontAttributeName : layout.messageBubbleFont }
+                                                          attributes:layout.messageBubbleAttributedStringAttributeDict  
                                                              context:nil];
 
         CGSize stringSize = CGRectIntegral(stringRect).size;

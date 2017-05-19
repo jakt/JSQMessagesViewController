@@ -64,7 +64,17 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     self.sectionInset = UIEdgeInsetsMake(10.0f, 4.0f, 10.0f, 4.0f);
     self.minimumLineSpacing = 4.0f;
     
-    _messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    
+    _messageBubbleAttributedStringAttributeDict = [NSMutableDictionary new];
+    
+    UIFont *messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    [_messageBubbleAttributedStringAttributeDict setObject:messageBubbleFont forKey:NSFontAttributeName];
+    
+    NSMutableParagraphStyle *messageBubbleParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+    messageBubbleParagraphStyle.lineSpacing = 4;
+    [_messageBubbleAttributedStringAttributeDict setObject:messageBubbleParagraphStyle forKey:NSParagraphStyleAttributeName];
+    
+    
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         _messageBubbleLeftRightMargin = 240.0f;
@@ -148,14 +158,14 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
 }
 
-- (void)setMessageBubbleFont:(UIFont *)messageBubbleFont
+- (void)setMessageBubbleAttributedStringAttributeDict:(NSMutableDictionary *)messageBubbleAttributedStringAttributeDict
 {
-    if ([_messageBubbleFont isEqual:messageBubbleFont]) {
+    if ([_messageBubbleAttributedStringAttributeDict isEqual:messageBubbleAttributedStringAttributeDict]) {
         return;
     }
     
-    NSParameterAssert(messageBubbleFont != nil);
-    _messageBubbleFont = messageBubbleFont;
+    NSParameterAssert(messageBubbleAttributedStringAttributeDict != nil);
+    _messageBubbleAttributedStringAttributeDict = messageBubbleAttributedStringAttributeDict;
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
 }
 
@@ -438,7 +448,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     layoutAttributes.textViewTextContainerInsets = self.messageBubbleTextViewTextContainerInsets;
     
-    layoutAttributes.messageBubbleFont = self.messageBubbleFont;
+    layoutAttributes.messageBubbleAttributedStringAttributeDict = self.messageBubbleAttributedStringAttributeDict;
     
     layoutAttributes.incomingAvatarViewSize = self.incomingAvatarViewSize;
     

@@ -102,7 +102,13 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault;
  *  
  *  @discussion The default value is the preferred system font for `UIFontTextStyleBody`. This value must not be `nil`.
  */
-@property (strong, nonatomic) UIFont *messageBubbleFont;
+//@property (strong, nonatomic) UIFont *messageBubbleFont;
+
+/**
+ *  Mutable attribute dictionary for attributed string attributes of all messages. Set all font/style here!
+*/
+
+@property (nonatomic) NSMutableDictionary *messageBubbleAttributedStringAttributeDict;
 
 /**
  *  The horizontal spacing used to lay out the `messageBubbleContainerView` frame within each `JSQMessagesCollectionViewCell`.

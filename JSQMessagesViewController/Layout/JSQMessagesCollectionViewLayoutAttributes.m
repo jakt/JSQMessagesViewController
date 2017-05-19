@@ -24,8 +24,18 @@
 
 - (instancetype)init {
     self = [super init];
-    if (self) {
-        _messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    if (self)
+    {
+        _messageBubbleAttributedStringAttributeDict = [NSMutableDictionary new];
+        
+        UIFont *messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+        [_messageBubbleAttributedStringAttributeDict setObject:messageBubbleFont forKey:NSFontAttributeName];
+        
+        NSMutableParagraphStyle *messageBubbleParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+        messageBubbleParagraphStyle.lineSpacing = 4;
+        [_messageBubbleAttributedStringAttributeDict setObject:messageBubbleParagraphStyle forKey:NSParagraphStyleAttributeName];
+        
+        
         _messageBubbleContainerViewWidth = 320.0f;
     }
     return self;
@@ -33,10 +43,10 @@
 
 #pragma mark - Setters
 
-- (void)setMessageBubbleFont:(UIFont *)messageBubbleFont
+- (void)setmessageBubbleAttributedStringAttributeDict:(NSMutableDictionary *)messageBubbleAttributedStringAttributeDict
 {
-    NSParameterAssert(messageBubbleFont != nil);
-    _messageBubbleFont = messageBubbleFont;
+    NSParameterAssert(messageBubbleAttributedStringAttributeDict != nil);
+    _messageBubbleAttributedStringAttributeDict = messageBubbleAttributedStringAttributeDict;
 }
 
 - (void)setMessageBubbleContainerViewWidth:(CGFloat)messageBubbleContainerViewWidth
@@ -102,7 +112,7 @@
     if (self.representedElementCategory == UICollectionElementCategoryCell) {
         JSQMessagesCollectionViewLayoutAttributes *layoutAttributes = (JSQMessagesCollectionViewLayoutAttributes *)object;
         
-        if (![layoutAttributes.messageBubbleFont isEqual:self.messageBubbleFont]
+        if (![layoutAttributes.messageBubbleAttributedStringAttributeDict isEqual:self.messageBubbleAttributedStringAttributeDict]
             || !UIEdgeInsetsEqualToEdgeInsets(layoutAttributes.textViewFrameInsets, self.textViewFrameInsets)
             || !UIEdgeInsetsEqualToEdgeInsets(layoutAttributes.textViewTextContainerInsets, self.textViewTextContainerInsets)
             || !CGSizeEqualToSize(layoutAttributes.incomingAvatarViewSize, self.incomingAvatarViewSize)
@@ -133,7 +143,7 @@
         return copy;
     }
     
-    copy.messageBubbleFont = self.messageBubbleFont;
+    copy.messageBubbleAttributedStringAttributeDict = self.messageBubbleAttributedStringAttributeDict;
     copy.messageBubbleContainerViewWidth = self.messageBubbleContainerViewWidth;
     copy.textViewFrameInsets = self.textViewFrameInsets;
     copy.textViewTextContainerInsets = self.textViewTextContainerInsets;

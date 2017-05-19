@@ -33,7 +33,19 @@
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     JSQMessagesCollectionViewLayoutAttributes *attrs = [JSQMessagesCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-    attrs.messageBubbleFont = [UIFont systemFontOfSize:15.0f];
+    
+    
+    NSMutableDictionary *messageBubbleAttributedStringAttributeDict = [NSMutableDictionary new];
+    
+    UIFont *messageBubbleFont = [UIFont systemFontOfSize:17.0f];
+    
+    [messageBubbleAttributedStringAttributeDict setObject:messageBubbleFont forKey:NSFontAttributeName];
+    
+    NSMutableParagraphStyle *messageBubbleParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+    messageBubbleParagraphStyle.lineSpacing = 4;
+    [messageBubbleAttributedStringAttributeDict setObject:messageBubbleParagraphStyle forKey:NSParagraphStyleAttributeName];
+    
+    attrs.messageBubbleAttributedStringAttributeDict = messageBubbleAttributedStringAttributeDict;
     attrs.messageBubbleContainerViewWidth = 40.0f;
     attrs.textViewTextContainerInsets = UIEdgeInsetsMake(10.0f, 8.0f, 10.0f, 8.0f);
     attrs.textViewFrameInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 6.0f);
