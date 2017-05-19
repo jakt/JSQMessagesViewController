@@ -34,7 +34,7 @@
 /**
  *  Mutable attribute dictionary for attributed string attributes of all messages. Set all font/style here!
  */
-@property (nonatomic) NSMutableDictionary *messageBubbleAttributedStringAttributeDict;
+@property (nonatomic) NSDictionary *messageBubbleAttributedStringAttributeDict;
 
 /**
  *  The width of the `messageBubbleContainerView` of a `JSQMessagesCollectionViewCell`.

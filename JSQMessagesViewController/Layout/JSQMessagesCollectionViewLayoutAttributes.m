@@ -29,11 +29,10 @@
         _messageBubbleAttributedStringAttributeDict = [NSMutableDictionary new];
         
         UIFont *messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-        [_messageBubbleAttributedStringAttributeDict setObject:messageBubbleFont forKey:NSFontAttributeName];
-        
         NSMutableParagraphStyle *messageBubbleParagraphStyle = [[NSMutableParagraphStyle alloc] init];
         messageBubbleParagraphStyle.lineSpacing = 4;
-        [_messageBubbleAttributedStringAttributeDict setObject:messageBubbleParagraphStyle forKey:NSParagraphStyleAttributeName];
+
+        _messageBubbleAttributedStringAttributeDict = @{ NSFontAttributeName:messageBubbleFont, NSParagraphStyleAttributeName:messageBubbleParagraphStyle };
         
         
         _messageBubbleContainerViewWidth = 320.0f;
@@ -43,7 +42,7 @@
 
 #pragma mark - Setters
 
-- (void)setmessageBubbleAttributedStringAttributeDict:(NSMutableDictionary *)messageBubbleAttributedStringAttributeDict
+- (void)setmessageBubbleAttributedStringAttributeDict:(NSDictionary *)messageBubbleAttributedStringAttributeDict
 {
     NSParameterAssert(messageBubbleAttributedStringAttributeDict != nil);
     _messageBubbleAttributedStringAttributeDict = messageBubbleAttributedStringAttributeDict;

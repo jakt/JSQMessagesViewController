@@ -238,25 +238,6 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     }
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    UIRectCorner corners;
-    if (self.outgoing) {
-        corners = (UIRectCornerTopLeft|UIRectCornerTopRight|UIRectCornerBottomLeft);
-    } else {
-        corners = (UIRectCornerTopLeft|UIRectCornerTopRight|UIRectCornerBottomRight);
-    }
-    [self.textView setNeedsLayout];
-    [self.textView layoutIfNeeded];
-    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.textView.bounds byRoundingCorners:corners cornerRadii:CGSizeMake(8.0, 8.0)];
-    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-    maskLayer.frame = self.textView.bounds;
-    maskLayer.path = path.CGPath;
-    self.textView.layer.mask = maskLayer;
-    self.textView.clipsToBounds = YES;
-}
-
 #pragma mark - Menu actions
 
 - (BOOL)respondsToSelector:(SEL)aSelector

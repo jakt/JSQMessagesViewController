@@ -65,16 +65,11 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     self.minimumLineSpacing = 4.0f;
     
     
-    _messageBubbleAttributedStringAttributeDict = [NSMutableDictionary new];
-    
     UIFont *messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    [_messageBubbleAttributedStringAttributeDict setObject:messageBubbleFont forKey:NSFontAttributeName];
-    
     NSMutableParagraphStyle *messageBubbleParagraphStyle = [[NSMutableParagraphStyle alloc] init];
     messageBubbleParagraphStyle.lineSpacing = 4;
-    [_messageBubbleAttributedStringAttributeDict setObject:messageBubbleParagraphStyle forKey:NSParagraphStyleAttributeName];
     
-    
+    _messageBubbleAttributedStringAttributeDict = @{ NSParagraphStyleAttributeName:messageBubbleParagraphStyle, NSFontAttributeName:messageBubbleFont };
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         _messageBubbleLeftRightMargin = 240.0f;
@@ -158,7 +153,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
 }
 
-- (void)setMessageBubbleAttributedStringAttributeDict:(NSMutableDictionary *)messageBubbleAttributedStringAttributeDict
+- (void)setMessageBubbleAttributedStringAttributeDict:(NSDictionary *)messageBubbleAttributedStringAttributeDict
 {
     if ([_messageBubbleAttributedStringAttributeDict isEqual:messageBubbleAttributedStringAttributeDict]) {
         return;

@@ -108,7 +108,7 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault;
  *  Mutable attribute dictionary for attributed string attributes of all messages. Set all font/style here!
 */
 
-@property (nonatomic) NSMutableDictionary *messageBubbleAttributedStringAttributeDict;
+@property (strong, nonatomic) NSDictionary *messageBubbleAttributedStringAttributeDict;
 
 /**
  *  The horizontal spacing used to lay out the `messageBubbleContainerView` frame within each `JSQMessagesCollectionViewCell`.
