@@ -238,7 +238,8 @@ JSQMessagesKeyboardControllerDelegate>
     self.toolbarHeightConstraint.constant = self.textBarHeight + toolbarContainerHeight;
     _toolbarContainerHeight = toolbarContainerHeight;
     CGFloat top = self.topLayoutGuide.length + self.topContentAdditionalInset;
-    CGFloat bottom = self.textBarHeight + toolbarContainerHeight;
+    CGFloat keyboardHeight = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMaxY(self.inputToolbar.frame);
+    CGFloat bottom = keyboardHeight + self.textBarHeight + toolbarContainerHeight;
     [UIView animateWithDuration:0.3 animations:^{
         CGFloat bottomInsetDiff = bottom - self.collectionView.contentInset.bottom;  // + when increasing, - when getting smaller
         [self jsq_setCollectionViewInsetsTopValue:top bottomValue:bottom];
