@@ -235,16 +235,17 @@ JSQMessagesKeyboardControllerDelegate>
 -(void) setToolbarContainerHeight:(CGFloat) toolbarContainerHeight {
     CGFloat distanceFromBottom = self.collectionView.contentSize.height - (self.collectionView.contentOffset.y + self.collectionView.frame.size.height - self.collectionView.contentInset.bottom);
     
-    CGFloat difference = toolbarContainerHeight - _toolbarContainerHeight;
     self.toolbarHeightConstraint.constant = self.textBarHeight + toolbarContainerHeight;
     _toolbarContainerHeight = toolbarContainerHeight;
     CGFloat top = self.topLayoutGuide.length + self.topContentAdditionalInset;
-    CGFloat bottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(self.inputToolbar.frame) + difference;
+    CGFloat bottom = self.textBarHeight + toolbarContainerHeight;
     [UIView animateWithDuration:0.3 animations:^{
+        CGFloat bottomInsetDiff = bottom - self.collectionView.contentInset.bottom;  // + when increasing, - when getting smaller
         [self jsq_setCollectionViewInsetsTopValue:top bottomValue:bottom];
-        if (distanceFromBottom == 0 && difference > 0) {
+        if (distanceFromBottom == 0 && bottomInsetDiff > 0) {
+            // If the collection is at the bottom (user is on the most recent message), push the view up and down if the toolbar needs to change height. Will automatically adjust if the inset is getting smaller but will need to be manually adjusted when the inset gets bigger.
             CGFloat current = self.collectionView.contentOffset.y;
-            self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, current + (difference - distanceFromBottom));
+            self.collectionView.contentOffset = CGPointMake(self.collectionView.contentOffset.x, current + bottomInsetDiff);
         }
         [self.collectionView layoutIfNeeded];
         [self.inputToolbar layoutIfNeeded];
